@@ -1,0 +1,10 @@
+body{
+  margin:0;
+}
+.buttons{
+  display: flex;
+  flex-flow: row nowrap;
+}
+input{
+  margin: 4px;
+}

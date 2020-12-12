@@ -1,0 +1,42 @@
+body{
+  /* background-color: red; */
+  margin: 0;
+}
+.main-container{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* background-color: red; */
+  justify-content: center;
+  align-items: center;
+}
+form{
+  /* background-color: yellow; */
+}
+fieldset{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+label{
+  margin-top: 4px;
+  align-self: flex-start;
+  padding: 3px;
+}
+.button{
+  padding: 15px;
+}
+input[type=submit]{
+  align-self: flex-end;
+}
+legend{
+  font-size: 24px;
+  color: blue;
+}
