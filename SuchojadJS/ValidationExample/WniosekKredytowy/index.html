@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pl" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+          <form name="creditForm" novalidate/>
+        <div class="field">
+        <label for="firstName">Imię:</label>
+        <input type="text" id="firstName" name="firstName" required />
+        <small data-error="firstName" class="error-hint hidden">Podaj
+        swoje imię.</small>
+        </div>
+        <div class="field">
+        <label for="lastName">Nazwisko:</label>
+        <input type="text" id="lastName" name="lastName" required />
+        <small data-error="lastName" class="error-hint hidden">Podaj
+        swoje nazwisko.</small>
+        </div>
+        <div class="field">
+        <label for="pesel">Numer PESEL:</label>
+        <input type="text" id="pesel" name="pesel" pattern="\d{11}" required />
+        <small data-error="pesel" class="error-hint hidden">Podaj
+        poprawny numer PESEL.</small>
+        </div>
+        <div class="field">
+        <label for="email">Adres e-mail:</label>
+        <input type="email" id="email" name="email" required />
+        <small data-error="email" class="error-hint hidden">Podaj
+        adres e-mail.</small>
+        </div>
+        <div class="field">
+        <span>Wykształcenie:</span>
+        <small data-error="education" class="error-hint hidden">
+        Określ swoje wykształcenie.
+        </small>
+        <div>
+        <input type="radio" id="education-basic" name="education"
+        value="BASIC" required />
+        <label for="education-basic">podstawowe</label>
+        </div>
+        <div>
+        <input type="radio" id="education-middle"
+        name="education" value="MIDDLE"/>
+        <label for="education-middle">średnie</label>
+        </div>
+        <div>
+        <input type="radio" id="education-hight" name="education"
+        value="HIGH" />
+        <label for="education-high">wyższe</label>
+        </div>
+        </div>
+        <div class="field">
+        <label for="monthlyIncomes">Dochody miesięczne [netto]:</label>
+        <select name="monthlyIncomes" id="monthlyIncomes">
+        <option value="LOW">poniżej 2000 zł</option>
+        <option value="MIDDLE" selected>2000 zł - 5000 zł</option>
+        <option value="HIGH">powyżej 5000 zł</option>
+        </select>
+        </div><div class="field">
+        <label for="monthlyExpenses">Wydatki miesięczne:</label>
+        <input type="number" id="monthlyExpenses"
+        name="monthlyExpenses" min="100" required />
+        <small data-error="monthlyExpenses" class="error-hint hidden">
+        Podaj średnie wydatki miesięczne (min. 100 zł).
+        </small>
+        </div>
+        <div class="field">
+        <label for="creditAmount">Kwota kredytu:</label>
+        <input type="number" id="creditAmount" name="creditAmount"
+        min="1000" max="5000" pattern="\d{4,}" required />
+        <small data-error="creditAmount" class="error-hint hidden">
+        Podaj wnioskowaną kwotę kredytu (min. 1000 zł, max 5000 zł).
+        </small>
+        </div>
+          <div class="field">
+            <label for="installments">Liczba rat:</label>
+            <input type="range" id="installments" name="installments"
+            min="5" max="24" value="10"/>
+            <output id="installmentsPeriod">10</output>
+          </div>
+          <div class="field">
+            <input type="checkbox" id="agreement" name="agreement"
+            value="AGREEMENT_SELECTED" required/>
+            <label for="agreement">Wyrażam zgodę na przetwarzanie moich
+            danych osobowych...</label>
+            <small data-error="agreement" class="error-hint hidden">
+              Zgoda jest wymagana aby wysłać wniosek kredytowy.
+            </small>
+          </div>
+          <div>
+            <button type="submit" class="button">Wyślij wniosek</button>
+          </div>
+      </form>
+      <script src="js/script.js" charset="utf-8"></script>
+  </body>
+</html>

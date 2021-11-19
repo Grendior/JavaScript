@@ -1,0 +1,15 @@
+.field {
+margin: 0.5rem 0;
+}
+.button {
+margin-top: 1rem;
+font-size: 1rem;
+padding: 0.5rem 2rem;
+}
+.error-hint {
+color: red;
+display: block;
+}
+.hidden {
+display: none;
+}

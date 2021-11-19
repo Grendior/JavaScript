@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Formularz</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <div class="container">
+      <form class="" action="" method="post">
+        <h2>Podziel się swoją opinią!</h2>
+        <div class="labelsInputs">
+          <div class="labels">
+          </div>
+          <div class="inputs">
+            <label for="name">Imię i nazwisko </label>
+            <input id="name" type="text" name="" value="" required>
+            <small data-error="name" class="Error hidden">Podaj imię i nazwisko</small>
+            <label for="idNumber">Numer klienta </label>
+            <input id="idNumber" type="text" name="" value="" required>
+            <small data-error="idNumber" class="Error hidden">Podaj Numer klienta (np.999)</small>
+            <label for="email">E-mail </label>
+            <input id="email" type="text" name="" value="" required>
+            <small data-error="email" class="Error hidden">Podaj Email</small>
+            <label for="service">Usługa z której korzystałeś </label>
+            <select name="service" id="service" required>
+              <option value="PHP">Hosting PHP</option>
+              <option value="ASP">Hosting ASP</option>
+              <option value="MySQL">Hosting MySQL</option>
+              <option value="PostgreSQL">Hosting PostgreSQL</option>
+            </select>
+            <small data-error="service" class="Error hidden">Wybierz hosting z listy</small>
+            <label>Ocena usługi </label>
+            <div class="radioInputs">
+              <input id="1" type="radio" name="" value="">
+              <label for="1">1</label>
+              <input id="2" type="radio" name="" value="">
+              <label for="2">2</label>
+              <input id="3" type="radio" name="" value="">
+              <label for="3">3</label>
+              <input id="4" type="radio" name="" value="">
+              <label for="4">4</label>
+              <input id="5" type="radio" name="" value="">
+              <label for="5">5</label>
+              <br>
+              <small data-error="rateStar" class="Error hidden">Oceń nas</small>
+            </div>
+            <label for="rate">Twoja opinia </label>
+            <div class="rate">
+            <textarea id="rate" name="rate" rows="8" cols="40"></textarea>
+            <br>
+            <small data-error="rate" class="Error hidden">Potrzebujemy twojej opinii</small>
+            </div>
+            <div class="private">
+              <input type="checkbox" id="policy" name="policy" checked>
+              <label for="policy">Wyrażam zgodę</label>
+              <br>
+              <small data-error="rate" class="Error hidden">Musisz wyrazić zgodę</small>
+            </div>
+            <div class="submit">
+              <button type="submit" name="button" >Prześlij</button>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </form>
+    </div>
+
+    <script src="js/script.js" charset="utf-8"></script>
+  </body>
+</html>
