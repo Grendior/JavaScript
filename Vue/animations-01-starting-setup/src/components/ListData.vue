@@ -35,9 +35,37 @@ ul {
   margin: 1rem 0;
   padding: 0;
 }
+.list-data-enter-from{
+    opacity: 0;
+    transform: translateX(-30px);
+}
+.list-data-enter-active{
+    transition: all 1s ease-out;
+}
+
+.list-data-leave-from,
+.list-data-enter-to{
+    opacity: 1;
+    transform: translateX(0);
+}
+.list-data-leave-active{
+    transition: all 1s ease-in;
+    position: absolute;
+}
+.list-data-leave-to{
+    opacity: 0;
+    transform: translateX(30px);
+}
+.list-data-move{
+    transition: transform 0.8s ease;
+}
+
 li {
   border: 1px solid #ccc;
   padding: 1rem;
   text-align: center;
 }
+
+
+
 </style>
