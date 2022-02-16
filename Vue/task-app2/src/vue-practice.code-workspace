@@ -20,6 +20,12 @@
 		},
 		{
 			"path": "../../../Praktyki/reuse-01-starting-setup"
+		},
+		{
+			"path": "../../../Praktyki/auth-01-starting-project"
+		},
+		{
+			"path": "../../../Praktyki/main-prj-01-starting-setup"
 		}
 	],
 	"settings": {}
