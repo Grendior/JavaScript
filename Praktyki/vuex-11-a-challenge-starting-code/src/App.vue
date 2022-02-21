@@ -3,28 +3,31 @@
   <router-view></router-view>
 </template>
 
-
 <script>
-import TheHeader from './components/layout/TheHeader.vue';
+import TheHeader from './components/nav/TheHeader.vue';
+
 export default {
   components: {
     TheHeader,
   },
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  methods: {
+    //TODO: login,logout, add product to cart,
+  },
 };
 </script>
 
-
-
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: sans-serif;
 }
 
 body {

@@ -4,28 +4,16 @@
 			"path": ".."
 		},
 		{
-			"path": "../../app"
-		},
-		{
-			"path": "../../main-prj-01-starting-setup"
-		},
-		{
-			"path": "../../composition-01-starting-setup"
-		},
-		{
-			"path": "../../composition-assignment-2-problem"
-		},
-		{
-			"path": "../../composition-13-demo-starting-project"
-		},
-		{
 			"path": "../../../Praktyki/reuse-01-starting-setup"
 		},
 		{
-			"path": "../../../Praktyki/auth-01-starting-project"
+			"path": "../../../Praktyki/main-prj-01-starting-setup"
 		},
 		{
-			"path": "../../../Praktyki/main-prj-01-starting-setup"
+			"path": "../../../Praktyki/vuex-01-starting-setup"
+		},
+		{
+			"path": "../../../Praktyki/vuex-11-a-challenge-starting-code"
 		}
 	],
 	"settings": {}
