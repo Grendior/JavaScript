@@ -4,10 +4,12 @@ export default {
       userEmail: payload.email,
       message: payload.message
     };
-    const response = await fetch(`https://vue-demo-app-test-default-rtdb.europe-west1.firebasedatabase.app/requests/${payload.coachId}.json`, {
-      method: 'POST',
-      body: JSON.stringify(newRequest)
-    });
+    const response = await fetch(
+      `https://vue-demo-app-test-default-rtdb.europe-west1.firebasedatabase.app/requests/${payload.coachId}.json`,
+      {
+        method: 'POST',
+        body: JSON.stringify(newRequest)
+      });
 
     const responseData = await response.json();
 

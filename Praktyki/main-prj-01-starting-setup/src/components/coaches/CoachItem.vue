@@ -23,21 +23,33 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core';
+import { useRoute } from 'vue-router';
 import BaseBadge from '../ui/BaseBadge.vue';
 import BaseButton from '../ui/BaseButton.vue';
 export default {
-  components: { BaseButton, BaseBadge },
+  components: {
+    BaseButton,
+    BaseBadge,
+  },
   props: ['id', 'firstName', 'lastName', 'rate', 'areas'],
-  computed: {
-    fullName() {
-      return this.firstName + ' ' + this.lastName;
-    },
-    coachContactLink() {
-      return this.$route.path + '/' + this.id + '/contact';
-    },
-    coachDetailsLink() {
-      return this.$route.path + '/' + this.id;
-    },
+  setup(props) {
+    const route = useRoute();
+
+    const fullName = computed(() => {
+      return props.firstName + ' ' + props.lastName;
+    });
+    const coachContactLink = computed(() => {
+      return route.path + '/' + props.id + '/contact';
+    });
+    const coachDetailsLink = computed(() => {
+      return route.path + '/' + props.id;
+    });
+    return {
+      fullName,
+      coachContactLink,
+      coachDetailsLink,
+    };
   },
 };
 </script>

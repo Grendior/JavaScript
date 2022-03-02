@@ -8,12 +8,17 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core';
 export default {
   props: ['email', 'message'],
-  computed: {
-    emailLink() {
-      return 'mailto:' + this.email;
-    },
+
+  setup(props) {
+    const emailLink = computed(() => {
+      return 'mailto:' + props.email;
+    });
+    return {
+      emailLink,
+    };
   },
 };
 </script>

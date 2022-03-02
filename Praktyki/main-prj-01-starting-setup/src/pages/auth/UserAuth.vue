@@ -30,67 +30,84 @@
 </template>
 
 <script>
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
 export default {
-  data() {
-    return {
-      email: '',
-      password: '',
-      formIsValid: true,
-      mode: 'login',
-      isLoading: false,
-      error: null,
-    };
-  },
-  computed: {
-    submitButtonCaption() {
-      if (this.mode === 'login') {
+  setup() {
+    const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+    const email = ref('');
+    const password = ref('');
+    const formIsValid = ref(true);
+    const mode = ref('login');
+    const isLoading = ref(false);
+    const error = ref(null);
+
+    const submitButtonCaption = computed(function () {
+      if (mode.value === 'login') {
         return 'Login';
       } else {
         return 'Signup';
       }
-    },
-    switchModeButtonCaption() {
-      if (this.mode === 'login') {
+    });
+    const switchModeButtonCaption = computed(function () {
+      if (mode.value === 'login') {
         return 'Signup instead';
       } else {
         return 'Login instead';
       }
-    },
-  },
-  methods: {
-    async submitForm() {
-      this.formIsValid;
-      if (this.email === '' || !this.email.includes('@') || this.password < 6) {
-        this.formIsValid = false;
+    });
+    async function submitForm() {
+      if (
+        email.value === '' ||
+        !email.value.includes('@') ||
+        password.value < 6
+      ) {
+        formIsValid.value = false;
         return;
       }
       const actionPayload = {
-        email: this.email,
-        password: this.password,
+        email: email.value,
+        password: password.value,
       };
-      this.isLoading = false;
+      isLoading.value = false;
       try {
-        if (this.mode === 'login') {
-          await this.$store.dispatch('login', actionPayload);
+        if (mode.value === 'login') {
+          await store.dispatch('login', actionPayload);
         } else {
-          await this.$store.dispatch('signup', actionPayload);
+          await store.dispatch('signup', actionPayload);
         }
-        const redirectUrl = '/' + (this.$route.query.redirect || 'coaches');
-        this.$router.replace(redirectUrl);
-      } catch (error) {
-        this.error = error.message || 'Failed to authenticate try later';
+        const redirectUrl = '/' + (route.query.redirect || 'coaches');
+        router.replace(redirectUrl);
+      } catch (err) {
+        error.value = err.message || 'Failed to authenticate try later';
       }
-    },
-    switchAuthMode() {
-      if (this.mode === 'login') {
-        this.mode = 'signup';
+    }
+    function switchAuthMode() {
+      if (mode.value === 'login') {
+        mode.value = 'signup';
       } else {
-        this.mode = 'login';
+        mode.value = 'login';
       }
-    },
-    handleError() {
-      this.error = null;
-    },
+    }
+    function handleError() {
+      error.value = null;
+    }
+    return {
+      email,
+      password,
+      formIsValid,
+      mode,
+      isLoading,
+      error,
+      submitForm,
+      switchAuthMode,
+      handleError,
+      submitButtonCaption,
+      switchModeButtonCaption,
+    };
   },
 };
 </script>

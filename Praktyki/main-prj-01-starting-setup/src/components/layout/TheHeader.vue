@@ -23,17 +23,26 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 export default {
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch('logout');
-      this.$router.replace('/coaches');
-    },
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const isLoggedIn = computed(() => {
+      return store.getters.isAuthenticated;
+    });
+
+    function logout() {
+      store.dispatch('logout');
+      router.replace('/coaches');
+    }
+    return {
+      isLoggedIn,
+      logout,
+    };
   },
 };
 </script>

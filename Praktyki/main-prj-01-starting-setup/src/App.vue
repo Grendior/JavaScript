@@ -9,25 +9,33 @@
 
 
 <script>
+import { computed, watch } from '@vue/runtime-core';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import TheHeader from './components/layout/TheHeader.vue';
 export default {
   components: {
     TheHeader,
   },
-  computed: {
-    didAutoLogout() {
-      return this.$store.getters.didAutoLogout;
-    },
-  },
-  created() {
-    this.$store.dispatch('tryLogin');
-  },
-  watch: {
-    didAutoLogout(newValue, oldValue) {
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    store.dispatch('tryLogin');
+
+    const didAutoLogout = computed(() => {
+      return store.getters.didAutoLogout;
+    });
+
+    watch(didAutoLogout, function (newValue, oldValue) {
       if (newValue && newValue !== oldValue) {
-        this.$router.replace('/coaches');
+        router.replace('/coaches');
       }
-    },
+    });
+
+    return {
+      didAutoLogout,
+    };
   },
 };
 </script>

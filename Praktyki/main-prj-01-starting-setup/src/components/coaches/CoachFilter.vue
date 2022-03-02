@@ -17,28 +17,27 @@
 </template>
 
 <script>
+// import { reactive } from '@vue/reactivity';
 export default {
   emits: ['change-filter'],
-  data() {
-    return {
-      filters: {
-        frontend: true,
-        backend: true,
-        career: true,
-      },
+  setup(props, { emit }) {
+    const filters = {
+      frontend: true,
+      backend: true,
+      career: true,
     };
-  },
-  methods: {
-    setFilter(event) {
+    function setFilter(event) {
       const inputId = event.target.id;
       const isActive = event.target.checked;
       const updatedFilters = {
-        ...this.filters,
+        ...filters,
         [inputId]: isActive,
       };
-      this.filters = updatedFilters;
-      this.$emit('change-filter', updatedFilters);
-    },
+      console.log(updatedFilters);
+      Object.assign(filters, updatedFilters);
+      emit('change-filter', updatedFilters);
+    }
+    return { setFilter };
   },
 };
 </script>

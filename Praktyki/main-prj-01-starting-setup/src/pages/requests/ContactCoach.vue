@@ -18,32 +18,41 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity';
+import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
 export default {
-  data() {
-    return {
-      email: '',
-      message: '',
-      formIsValid: true,
-    };
-  },
-  methods: {
-    submitForm() {
-      this.formIsValid = true;
+  setup() {
+    const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
+    const email = ref('');
+    const message = ref('');
+    const formIsValid = ref(true);
+
+    function submitForm() {
+      formIsValid.value = true;
       if (
-        this.email === '' ||
-        !this.email.includes('@') ||
-        this.message === ''
+        email.value === '' ||
+        !email.value.includes('@') ||
+        message.value === ''
       ) {
-        this.formIsValid = false;
+        formIsValid.value = false;
         return;
       }
-      this.$store.dispatch('requests/contactCoach', {
-        email: this.email,
-        message: this.message,
-        coachId: this.$route.params.id,
+      store.dispatch('requests/contactCoach', {
+        email: email.value,
+        message: message.value,
+        coachId: route.params.id,
       });
-      this.$router.replace('/coaches');
-    },
+      router.replace('/coaches');
+    }
+    return {
+      email,
+      message,
+      formIsValid,
+      submitForm,
+    };
   },
 };
 </script>

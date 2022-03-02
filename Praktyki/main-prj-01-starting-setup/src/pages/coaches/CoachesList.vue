@@ -4,7 +4,7 @@
       <p>{{ error }}</p>
     </base-dialog>
     <section>
-      <coach-filter></coach-filter>
+      <coach-filter @change-filter="setFilters"></coach-filter>
     </section>
     <section>
       <base-card>
@@ -22,22 +22,24 @@
             >Register as Coach</base-button
           >
         </div>
-        <div v-if="isLoading">
-          <base-spinner></base-spinner>
-        </div>
-        <ul v-else-if="hasCoaches">
-          <coach-item
-            v-for="coach in filteredCoaches"
-            :key="coach.id"
-            :id="coach.id"
-            :first-name="coach.firstName"
-            :last-name="coach.lastName"
-            :rate="coach.hourlyRate"
-            :areas="coach.areas"
-          >
-          </coach-item>
-        </ul>
-        <h3 v-else>No coaches found.</h3>
+        <transition name="list">
+          <div v-if="isLoading">
+            <base-spinner></base-spinner>
+          </div>
+          <ul v-else-if="hasCoaches">
+            <coach-item
+              v-for="coach in filteredCoaches"
+              :key="coach.id"
+              :id="coach.id"
+              :first-name="coach.firstName"
+              :last-name="coach.lastName"
+              :rate="coach.hourlyRate"
+              :areas="coach.areas"
+            >
+            </coach-item>
+          </ul>
+          <h3 v-else>No coaches found.</h3>
+        </transition>
       </base-card>
     </section>
   </div>
@@ -46,68 +48,80 @@
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '../../components/coaches/CoachFilter.vue';
+import { reactive, ref } from '@vue/reactivity';
+import { computed } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 export default {
   components: {
     CoachItem,
     CoachFilter,
   },
-  data() {
-    return {
-      isLoading: false,
-      error: null,
-      activeFilters: {
-        frontend: true,
-        backend: true,
-        career: true,
-      },
-    };
-  },
-  computed: {
-    isLoggedIn() {
-      return this.$store.getters.isAuthenticated;
-    },
-    isCoach() {
-      return this.$store.getters['coaches/isCoach'];
-    },
-    filteredCoaches() {
-      const coaches = this.$store.getters['coaches/coaches'];
+  setup() {
+    const store = useStore();
+    const isLoading = ref(false);
+    const error = ref(null);
+    const activeFilters = reactive({
+      frontend: true,
+      backend: true,
+      career: true,
+    });
+    loadCoaches();
+    const isLoggedIn = computed(() => {
+      return store.getters.isAuthenticated;
+    });
+    const isCoach = computed(() => {
+      return store.getters['coaches/isCoach'];
+    });
+    const filteredCoaches = computed(() => {
+      const coaches = store.getters['coaches/coaches'];
+      // console.log(coaches);
       return coaches.filter((coach) => {
-        if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
+        console.log(coach.areas);
+        console.log(activeFilters.frontend);
+        if (activeFilters.frontend && coach.areas.includes('frontend')) {
           return true;
         }
-        if (this.activeFilters.backend && coach.areas.includes('backend')) {
+        if (activeFilters.backend && coach.areas.includes('backend')) {
           return true;
         }
-        if (this.activeFilters.career && coach.areas.includes('career')) {
+        if (activeFilters.career && coach.areas.includes('career')) {
           return true;
         }
+        return false;
       });
-    },
-    hasCoaches() {
-      return !this.isLoading && this.$store.getters['coaches/hasCoaches'];
-    },
-  },
-  created() {
-    this.loadCoaches();
-  },
-  methods: {
-    async loadCoaches(refresh = false) {
-      this.isLoading = true;
+    });
+    const hasCoaches = computed(() => {
+      return !isLoading.value && store.getters['coaches/hasCoaches'];
+    });
+    async function loadCoaches(refresh = false) {
+      isLoading.value = true;
       try {
-        await this.$store.dispatch('coaches/loadCoaches', {
+        await store.dispatch('coaches/loadCoaches', {
           forceRefresh: refresh,
         });
-      } catch (error) {
-        this.error = error.message || 'Something went wrong!';
+      } catch (err) {
+        error.value = err.message || 'Something went wrong!';
       }
-      this.isLoading = false;
-    },
-    handleError() {
-      this.error = null;
-    },
-    setFilters(updatedFilters) {
-      this.activeFilters = updatedFilters;
-    },
+      isLoading.value = false;
+    }
+    function handleError() {
+      error.value = null;
+    }
+    function setFilters(updatedFilters) {
+      Object.assign(activeFilters, updatedFilters);
+    }
+    return {
+      isLoading,
+      error,
+      activeFilters,
+      filteredCoaches,
+      hasCoaches,
+      isLoggedIn,
+      isCoach,
+      handleError,
+      setFilters,
+      loadCoaches,
+    };
   },
 };
 </script>
@@ -117,6 +131,22 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.list-enter-form,
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.list-enter-active {
+  transition: all 0.3s ease-out;
+}
+.list-leave-active {
+  transition: all 0.3s ease-in;
+}
+.list-enter-to,
+.list-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .controls {

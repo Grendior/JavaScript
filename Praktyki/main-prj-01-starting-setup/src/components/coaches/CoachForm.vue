@@ -80,76 +80,83 @@
 </template>
 
 <script>
+import { reactive, ref } from '@vue/reactivity';
 export default {
   emits: ['save-data'],
-  data() {
-    return {
-      formIsValid: null,
-      firstName: {
-        val: '',
-        isValid: true,
-      },
-      lastName: {
-        val: '',
-        isValid: true,
-      },
-      description: {
-        val: '',
-        isValid: true,
-      },
-      rate: {
-        val: null,
-        isValid: true,
-      },
-      areas: {
-        val: [],
-        isValid: true,
-      },
-    };
-  },
-  methods: {
-    clearValidity(input) {
-      this[input].isValid = true;
-    },
-    validateForm() {
-      this.formIsValid = true;
-      if (this.firstName.val === '') {
-        this.firstName.isValid = false;
-        this.formIsValid = false;
+  setup(props, { emit }) {
+    const formIsValid = ref(null);
+    const firstName = reactive({
+      val: '',
+      isValid: true,
+    });
+    const lastName = reactive({
+      val: '',
+      isValid: true,
+    });
+    const description = reactive({
+      val: '',
+      isValid: true,
+    });
+    const rate = reactive({
+      val: null,
+      isValid: true,
+    });
+    const areas = reactive({
+      val: [],
+      isValid: true,
+    });
+    function clearValidity(input) {
+      [input].isValid = true;
+    }
+    function validateForm() {
+      formIsValid.value = true;
+      if (firstName.val === '') {
+        firstName.isValid = false;
+        formIsValid.value = false;
       }
-      if (this.lastName.val === '') {
-        this.lastName.isValid = false;
-        this.formIsValid = false;
+      if (lastName.val === '') {
+        lastName.isValid = false;
+        formIsValid.value = false;
       }
-      if (this.description.val === '') {
-        this.description.isValid = false;
-        this.formIsValid = false;
+      if (description.val === '') {
+        description.isValid = false;
+        formIsValid.value = false;
       }
-      if (!this.rate.val || this.rate.val < 0) {
-        this.rate.isValid = false;
-        this.formIsValid = false;
+      if (!rate.val || rate.val < 0) {
+        rate.isValid = false;
+        formIsValid.value = false;
       }
-      if (this.areas.val.length === 0) {
-        this.areas.isValid = false;
-        this.formIsValid = false;
+      if (areas.val.length === 0) {
+        areas.isValid = false;
+        formIsValid.value = false;
       }
-    },
-    submitForm() {
-      this.validateForm();
+    }
+    function submitForm() {
+      validateForm();
 
-      if (!this.formIsValid) {
+      if (!formIsValid.value) {
         return;
       }
 
       const formData = {
-        first: this.firstName.val,
-        last: this.lastName.val,
-        desc: this.description.val,
-        rate: this.rate.val,
-        areas: this.areas.val,
+        first: firstName.val,
+        last: lastName.val,
+        desc: description.val,
+        rate: rate.val,
+        areas: areas.val,
       };
-      this.$emit('save-data', formData);
-    },
+      emit('save-data', formData);
+    }
+    return {
+      formIsValid,
+      firstName,
+      lastName,
+      description,
+      rate,
+      areas,
+      clearValidity,
+      submitForm,
+    };
   },
 };
 </script>

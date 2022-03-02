@@ -30,34 +30,43 @@
 </template>
 
 <script>
+import { ref } from '@vue/reactivity';
+import { computed } from '@vue/runtime-core';
+import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 export default {
   props: ['id'],
-  data() {
-    return {
-      selectedCoach: null,
-    };
-  },
-  computed: {
-    fullName() {
-      return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
-    },
-    areas() {
-      return this.selectedCoach.areas;
-    },
-    rate() {
-      return this.selectedCoach.hourlyRate;
-    },
-    description() {
-      return this.selectedCoach.description;
-    },
-    contactLink() {
-      return this.$route.path + '/' + this.id + '/contact';
-    },
-  },
-  created() {
-    this.selectedCoach = this.$store.getters['coaches/coaches'].find(
-      (coach) => coach.id === this.id
+  setup(props) {
+    const route = useRoute();
+    const store = useStore();
+    const selectedCoach = ref(null);
+    selectedCoach.value = store.getters['coaches/coaches'].find(
+      (coach) => coach.id === props.id
     );
+
+    const fullName = computed(function () {
+      return selectedCoach.value.firstName + ' ' + selectedCoach.value.lastName;
+    });
+    const areas = computed(function () {
+      return selectedCoach.value.areas;
+    });
+    const rate = computed(function () {
+      return selectedCoach.value.hourlyRate;
+    });
+    const description = computed(function () {
+      return selectedCoach.value.description;
+    });
+    const contactLink = computed(function () {
+      return route.path + '/contact';
+    });
+    return {
+      selectedCoach,
+      fullName,
+      areas,
+      description,
+      contactLink,
+      rate,
+    };
   },
 };
 </script>
