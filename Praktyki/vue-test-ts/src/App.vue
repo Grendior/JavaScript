@@ -1,4 +1,5 @@
 <template>
+  <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" /> -->
   <the-header></the-header>
   <router-view v-slot="slotProps">
     <transition name="route" mode="out-in">
@@ -7,13 +8,14 @@
   </router-view>
 </template>
 
+<script lang="ts">
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+import { defineComponent, computed, watch } from "vue";
+import TheHeader from "./components/layout/TheHeader.vue";
 
-<script>
-import { computed, watch } from '@vue/runtime-core';
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import TheHeader from './components/layout/TheHeader.vue';
-export default {
+export default defineComponent({
+  name: "App",
   components: {
     TheHeader,
   },
@@ -21,7 +23,7 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    store.dispatch('tryLogin');
+    store.dispatch("tryLogin");
 
     const didAutoLogout = computed(() => {
       return store.getters.didAutoLogout;
@@ -29,7 +31,7 @@ export default {
 
     watch(didAutoLogout, function (newValue, oldValue) {
       if (newValue && newValue !== oldValue) {
-        router.replace('/coaches');
+        router.replace("/coaches");
       }
     });
 
@@ -37,18 +39,17 @@ export default {
       didAutoLogout,
     };
   },
-};
+});
 </script>
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
