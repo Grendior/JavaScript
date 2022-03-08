@@ -85,7 +85,7 @@
 import { reactive, ref } from "@vue/reactivity";
 import { defineComponent } from "@vue/runtime-core";
 // import formNames from "@/types/fromNames";
-import ICoach from "@/types/ICoach";
+import { Coach, CoachArea } from "../../types/Coach";
 
 interface IVariableWithValidation {
   val: string | string[] | null | number;
@@ -149,12 +149,12 @@ export default defineComponent({
         return;
       }
 
-      const formData: ICoach = {
+      const formData: Coach = {
         firstName: first.val as string,
         lastName: last.val as string,
         description: desc.val as string,
         hourlyRate: rate.val as number,
-        areas: areas.val as ("frontend" | "backend" | "career")[],
+        areas: areas.val as CoachArea[],
       };
       emit("save-data", formData);
     }

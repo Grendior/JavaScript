@@ -18,14 +18,14 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
-import Filter from "@/types/IFiltersInfo";
+import { Filters } from "@/types/Filters";
 
 // import { reactive } from '@vue/reactivity';
 export default defineComponent({
   // const emit = defineEmits(['change', 'update']),
   emits: ["change-filter"],
   setup(props, { emit }) {
-    const filters: Filter = {
+    const filters: Filters = {
       frontend: true,
       backend: true,
       career: true,
@@ -33,7 +33,7 @@ export default defineComponent({
     function setFilter(event: Event) {
       const inputId = (event.target as HTMLInputElement).id;
       const isActive = (event.target as HTMLInputElement).checked;
-      const updatedFilters: Filter = {
+      const updatedFilters: Filters = {
         ...filters,
         [inputId]: isActive,
       };

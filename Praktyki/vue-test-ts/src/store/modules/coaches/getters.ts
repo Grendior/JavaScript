@@ -1,4 +1,4 @@
-import ICoach from '@/types/ICoach'
+import { Coach } from '@/types/Coach'
 export default {
     coaches(state:any) {
         return state.coaches;
@@ -9,7 +9,7 @@ export default {
     isCoach(_:any, getters:any, _2:any, rootGetters:any) {
         const coaches = getters.coaches;
         const userId = rootGetters.userId;
-        return coaches.some((coach:ICoach) => coach.id === userId);
+        return coaches.some((coach:Coach) => coach.id === userId);
 
     },
     shouldUpdate(state:any) {

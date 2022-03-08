@@ -26,6 +26,7 @@ const router = createRouter({
     { path: '/auth', component: UserAuth, meta: { requiresUnauth: true } },
     { path: '/:notFound(.*)', component: NotFound },
   ],
+
 });
 
 router.beforeEach(function (to, _, next) {

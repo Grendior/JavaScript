@@ -34,22 +34,6 @@ export default {
     BaseBadge,
   },
   props: {
-    // id: {
-    //   type: Object as () => { idTest: string },
-    //   required: true,
-    // },
-    // firstName: {
-    //   type: Object as () => { idTest: string },
-    //   required: true,
-    // },
-    // lastName: {
-    //   type: Object as () => { idTest: string },
-    //   required: true,
-    // },
-    // rate: {
-    //   type: Object as () => { idTest: number },
-    //   required: true,
-    // },
     id: String,
     firstName: String,
     lastName: String,

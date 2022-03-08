@@ -9,7 +9,7 @@
 
 
 <script lang="ts">
-import ICoach from "@/types/ICoach";
+import { Coach } from "@/types/Coach";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import CoachForm from "../../components/coaches/CoachForm.vue";
@@ -21,7 +21,7 @@ export default {
     const store = useStore();
     const router = useRouter();
 
-    function saveData(data: ICoach) {
+    function saveData(data: Coach) {
       store.dispatch("coaches/registerCoach", data);
       router.replace("/coaches");
     }

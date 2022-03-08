@@ -1,7 +1,5 @@
-interface IFilters {
+export interface Filters {
   frontend: Boolean,
   backend: Boolean,
   career: Boolean
 }
-
-export default IFilters;

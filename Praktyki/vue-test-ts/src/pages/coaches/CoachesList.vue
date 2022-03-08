@@ -51,8 +51,8 @@ import CoachFilter from "../../components/coaches/CoachFilter.vue";
 import { reactive, ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
-import Filter from "@/types/IFiltersInfo";
-import ICoach from "@/types/ICoach";
+import { Filters } from "@/types/Filters";
+import { Coach } from "@/types/Coach";
 export default {
   components: {
     CoachItem,
@@ -62,7 +62,7 @@ export default {
     const store = useStore();
     const isLoading = ref(false);
     const error = ref(null);
-    const activeFilters: Filter = reactive({
+    const activeFilters: Filters = reactive({
       frontend: true,
       backend: true,
       career: true,
@@ -74,9 +74,9 @@ export default {
     const isCoach = computed(() => {
       return store.getters["coaches/isCoach"];
     });
-    const filteredCoaches = computed<ICoach[]>(() => {
+    const filteredCoaches = computed<Coach[]>(() => {
       const coaches = store.getters["coaches/coaches"];
-      return coaches.filter((coach: ICoach) => {
+      return coaches.filter((coach: Coach) => {
         if (activeFilters.frontend && coach.areas.includes("frontend")) {
           // console.log(filteredCoaches);
           return true;
@@ -111,7 +111,7 @@ export default {
     function handleError() {
       error.value = null;
     }
-    function setFilters(updatedFilters: Filter) {
+    function setFilters(updatedFilters: Filters) {
       Object.assign(activeFilters, updatedFilters);
     }
     return {

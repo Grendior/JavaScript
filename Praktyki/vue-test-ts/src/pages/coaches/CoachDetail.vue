@@ -10,7 +10,9 @@
       <base-card>
         <header>
           <h2>Interested? Reach out now!</h2>
-          <base-button link :to="contactLink">Contact</base-button>
+          <base-button v-if="contactVisible" link :to="contactLink"
+            >Contact</base-button
+          >
         </header>
         <router-view></router-view>
       </base-card>
@@ -34,17 +36,20 @@ import { ref } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import ICoach from "@/types/ICoach";
+import { Coach } from "@/types/Coach";
+// import router from "@/router";
 export default {
   props: {
     id: String,
   },
   setup(props: any) {
+    // const router = useRouter();
     const route = useRoute();
     const store = useStore();
     const selectedCoach = ref();
+    const contactVisible = ref<Boolean>(true);
     selectedCoach.value = store.getters["coaches/coaches"].find(
-      (coach: ICoach) => coach.id === props.id
+      (coach: Coach) => coach.id === props.id
     );
 
     const fullName = computed(function () {
@@ -60,6 +65,17 @@ export default {
       return selectedCoach.value.description;
     });
     const contactLink = computed(function () {
+      // console.log(route.path);
+      // console.log("/coaches/" + props.id + "/contact");
+      if (
+        route.path === "/coaches/" + props.id + "/contact" &&
+        contactVisible.value === true
+      ) {
+        contactVisible.value = false;
+        // return router.go(0);
+        return route.path;
+      }
+      contactVisible.value = true;
       return route.path + "/contact";
     });
     return {
@@ -68,6 +84,7 @@ export default {
       areas,
       description,
       contactLink,
+      contactVisible,
       rate,
     };
   },
