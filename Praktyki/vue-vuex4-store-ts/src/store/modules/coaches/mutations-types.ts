@@ -1,0 +1,5 @@
+export enum MutationTypes {
+  SET_COACH = 'SET_COACH',
+  SET_COACHES = 'SET_COACHES',
+  SET_FETCH_TIMESTAMP = 'SET_FETCH_TIMESTAMP',
+}

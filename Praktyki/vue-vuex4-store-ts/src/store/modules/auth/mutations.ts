@@ -1,16 +1,20 @@
 import { MutationTypes } from "./mutation-types";
 import { MutationTree } from "vuex";
 import { State } from "./state";
+import { User } from "../../../types/User";
 
 export type Mutations<S = State> = {
-  [MutationTypes.SET_USER](state:S, payload: object):void,
-  [MutationTypes.SET_AUTO_LOGOUT](state:S, payload: boolean)
+  [MutationTypes.SET_USER](state: S, payload: User): void,
+  [MutationTypes.SET_AUTO_LOGOUT](state: S,): void
 }
 export const mutations: MutationTree<State> & Mutations = {
-  [MutationTypes.SET_USER](state,payload: object){
-    state.token = payload.token,
-    state.userId = payload.userId,
-    state.didAutoLogout = false
+  [MutationTypes.SET_USER](state, payload: User) {
+    state.token = payload.token;
+    state.userId = payload.userId;
+    state.didAutoLogout = false;
+  },
+  [MutationTypes.SET_AUTO_LOGOUT](state) {
+    state.didAutoLogout = true;
   }
 }
 
